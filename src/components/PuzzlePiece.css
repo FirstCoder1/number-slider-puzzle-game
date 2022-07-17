@@ -1,0 +1,22 @@
+.puzzle-piece {
+    width: 80px;
+    height: 80px;
+    background: var(--backcolor2);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    justify-content: column;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.puzzle-piece>p {
+    color: var(--font-color);
+    font-size: 50px;
+    margin: auto auto;
+    font-weight: bold;
+    flex: 1;
+    text-shadow: var(--text-shadow);
+}

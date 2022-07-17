@@ -1,0 +1,46 @@
+:root {
+    --backcolor1: rgb(160, 160, 20);
+    --backcolor2: rgb(220, 220, 15);
+    --font-color: rgb(0, 255, 50);
+    --border: 3px solid rgb(118, 126, 28);
+    --border-radius: 15px;
+    --box-shadow: 2px 2px rgb(54, 59, 4);
+    --text-shadow: 1px 1px #000;
+}
+
+.App {
+    text-align: center;
+}
+
+.puzzle-board {
+    width: 265px;
+    height: 265px;
+    background: var(--backcolor1);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1px;
+    justify-content: start;
+    margin: auto;
+}
+
+button {
+    width: 160px;
+    height: 70px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    background: var(--backcolor2);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--font-color);
+    cursor: pointer;
+    text-shadow: var(--text-shadow);
+}
+
+h1 {
+    color: red;
+}
