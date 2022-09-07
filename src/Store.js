@@ -17,7 +17,7 @@ export const Provider = ({ children }) => {
             if (index === spacePos) return state[selectedPos];
             return pos;
           });
-        break;
+        else return state;
       }
       default:
         return state;
