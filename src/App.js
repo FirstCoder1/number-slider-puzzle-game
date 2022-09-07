@@ -6,52 +6,60 @@ import PuzzlePiece from "./components/PuzzlePiece";
 
 //styles
 import "./App.css";
+import { useReducer } from "react";
 
 function App() {
-  //hook
-  const [positions, setPositions] = useState([]);
-
-  const getRandomPosition = () => {
-    setPositions(
-      Array.from(Array(9).keys()) //0~8
-        .sort(() => Math.random() - 0.5) //random
-    );
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "GET_RANDOM_POSITION":
+        return Array.from(Array(9).keys()) //0~8
+          .sort(() => Math.random() - 0.5); //random
+      case "SWAP_POSITION":
+        return state.map((pos, index) => {
+          if (index === action.selectedPos) return state[action.spacePos];
+          if (index === action.spacePos) return state[action.selectedPos];
+          return pos;
+        });
+      default:
+        return state;
+    }
   };
+
+  const [state, dispatch] = useReducer(reducer, []);
+
   const checkMovable = (pos, posZero) => {
     const diff = Math.abs(posZero - pos);
-    if (diff % 3 === 0 || diff === 1) return true;
+    if (diff === 3 || diff === 1) return true;
     return false;
   };
-  const swapPosition = (pos, posZero) => {
-    const newPositions = [...positions];
-    newPositions[pos] = positions[posZero];
-    newPositions[posZero] = positions[pos];
-    setPositions(newPositions);
-  };
+
   const moveHandler = (number) => {
-    const posZero = positions.indexOf(0);
-    const pos = positions.indexOf(number);
-    if (checkMovable(pos, posZero)) swapPosition(pos, posZero);
+    const spacePos = state.indexOf(0);
+    const selectedPos = state.indexOf(number);
+    if (checkMovable(selectedPos, spacePos))
+      dispatch({ type: "SWAP_POSITION", selectedPos, spacePos });
   };
 
   useEffect(() => {
-    getRandomPosition();
+    dispatch({ type: "GET_RANDOM_POSITION" });
   }, []);
 
   const isWin = useMemo(
     () =>
-      positions.reduce(
+      state.reduce(
         (pre, cur, index) => pre && (cur === index + 1 || cur === 0),
         true
       ),
-    [positions]
+    [state]
   );
 
   return (
     <div className="App">
-      <button onClick={getRandomPosition}>Restart</button>
+      <button onClick={() => dispatch({ type: "GET_RANDOM_POSITION" })}>
+        Restart
+      </button>
       <div className="puzzle-board">
-        {positions.map((num) => (
+        {state.map((num) => (
           <PuzzlePiece key={num} number={num} moveHandler={moveHandler} />
         ))}
       </div>
