@@ -25,19 +25,6 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, []);
 
-  const checkMovable = (pos, posZero) => {
-    const diff = Math.abs(posZero - pos);
-    if (diff === 3 || diff === 1) return true;
-    return false;
-  };
-
-  const moveHandler = (number) => {
-    const spacePos = state.indexOf(0);
-    const selectedPos = state.indexOf(number);
-    if (checkMovable(selectedPos, spacePos))
-      dispatch({ type: "SWAP_POSITION", selectedPos, spacePos });
-  };
-
   useEffect(() => {
     dispatch({ type: "GET_RANDOM_POSITION" });
   }, []);
@@ -58,7 +45,12 @@ function App() {
       </button>
       <div className="puzzle-board">
         {state.map((num) => (
-          <PuzzlePiece key={num} number={num} moveHandler={moveHandler} />
+          <PuzzlePiece
+            key={num}
+            number={num}
+            state={state}
+            dispatch={dispatch}
+          />
         ))}
       </div>
       {isWin ? <h1> Congratulation! </h1> : <p>Please Click Puzzles</p>}
