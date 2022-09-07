@@ -1,20 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import "./PuzzlePiece.css";
 
-export default function PuzzlePiece({ number, state, dispatch }) {
+function PuzzlePiece({ number, moveHandler }) {
   const isNonZero = number !== 0;
-  const checkMovable = (pos, posZero) => {
-    const diff = Math.abs(posZero - pos);
-    if (diff === 3 || diff === 1) return true;
-    return false;
-  };
 
-  const moveHandler = (number) => {
-    const spacePos = state.indexOf(0);
-    const selectedPos = state.indexOf(number);
-    if (checkMovable(selectedPos, spacePos))
-      dispatch({ type: "SWAP_POSITION", selectedPos, spacePos });
-  };
   return (
     <div
       className={isNonZero ? "puzzle-piece" : ""}
@@ -24,3 +13,5 @@ export default function PuzzlePiece({ number, state, dispatch }) {
     </div>
   );
 }
+
+export default memo(PuzzlePiece);
