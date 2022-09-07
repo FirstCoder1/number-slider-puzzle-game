@@ -1,8 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import "./PuzzlePiece.css";
 
-export default function PuzzlePiece({ number, moveHandler }) {
+function PuzzlePiece({ number, moveHandler }) {
   const isNonZero = number !== 0;
+
   return (
     <div
       className={isNonZero ? "puzzle-piece" : ""}
@@ -12,3 +13,5 @@ export default function PuzzlePiece({ number, moveHandler }) {
     </div>
   );
 }
+
+export default memo(PuzzlePiece);
