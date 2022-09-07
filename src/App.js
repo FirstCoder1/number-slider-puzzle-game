@@ -29,7 +29,7 @@ function App() {
 
   const checkMovable = (pos, posZero) => {
     const diff = Math.abs(posZero - pos);
-    if (diff % 3 === 0 || diff === 1) return true;
+    if (diff === 3 || diff === 1) return true;
     return false;
   };
 
