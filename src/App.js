@@ -1,47 +1,33 @@
-import { useEffect, useMemo, useContext, useCallback } from "react";
+import { useEffect, useCallback } from "react";
+import { observer } from "mobx-react";
 
 //components
 import PuzzlePiece from "./components/PuzzlePiece";
-import { DispatchContext } from "./Store";
-import { StateContext } from "./Store";
+import store from "./Store";
 
 //styles
 import "./App.css";
 
-function App() {
-  const state = useContext(StateContext);
-  const dispatch = useContext(DispatchContext);
-
+const App = observer(() => {
   useEffect(() => {
-    dispatch({ type: "GET_RANDOM_POSITION" });
+    store.getRandomPosition();
   }, []);
 
-  const isWin = useMemo(
-    () =>
-      state.reduce(
-        (pre, cur, index) => pre && (cur === index + 1 || cur === 0),
-        true
-      ),
-    [state]
-  );
-
   const moveHandler = useCallback((number) => {
-    dispatch({ type: "SWAP_POSITION", number: number });
+    store.swapPosition(number);
   }, []);
 
   return (
     <div className="App">
-      <button onClick={() => dispatch({ type: "GET_RANDOM_POSITION" })}>
-        Restart
-      </button>
+      <button onClick={() => store.getRandomPosition()}>Restart</button>
       <div className="puzzle-board">
-        {state.map((num) => (
+        {store.state.map((num) => (
           <PuzzlePiece key={num} number={num} moveHandler={moveHandler} />
         ))}
       </div>
-      {isWin ? <h1> Congratulation! </h1> : <p>Please Click Puzzles</p>}
+      {store.isWin ? <h1> Congratulation! </h1> : <p>Please Click Puzzles</p>}
     </div>
   );
-}
+});
 
 export default App;
