@@ -1,12 +1,10 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 
 //components
-
 import PuzzlePiece from "./components/PuzzlePiece";
 
 //styles
 import "./App.css";
-import { useReducer } from "react";
 
 function App() {
   const reducer = (state, action) => {
@@ -63,7 +61,7 @@ function App() {
           <PuzzlePiece key={num} number={num} moveHandler={moveHandler} />
         ))}
       </div>
-      {isWin ? <h1> Congrantulation! </h1> : <p> Please Click Puzzles</p>}
+      {isWin ? <h1> Congratulation! </h1> : <p>Please Click Puzzles</p>}
     </div>
   );
 }
